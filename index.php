@@ -14,9 +14,7 @@ function connection() {
 }
 
 $con = connection();
-$sql = "SELECT p.ProductName \"Nombre Producto\", c.CategoryName \"Nombre de categoria\", p.UnitPrice \"Precio por unidad\" 
-        FROM products p JOIN categories c ON p.CategoryID = c.CategoryID 
-        WHERE p.UnitPrice > (SELECT AVG(p2.UnitPrice) FROM products p2 WHERE p2.CategoryID = p.CategoryID) ORDER BY c.CategoryName, p.ProductName";
+$sql = "SELECT ProductID, ProductName, UnitsInStock FROM products";
 $query = mysqli_query($con, $sql);
 
 ?>
@@ -26,11 +24,11 @@ $query = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarea entregable tabla query northwind</title>
+    <title>Acceso a datos</title>
     <style>
         table {
-            border-collapse: separate;
-            width: 50%;
+            border-collapse: collapse;
+            width: 30%;
             border: 1px solid #000;
         }
 
@@ -40,23 +38,23 @@ $query = mysqli_query($con, $sql);
             text-align: center;
         }
 
-        .izq {
-            text-align: left;
+        table td:nth-child(3) {
+            width: 100px;
         }
     </style>
 </head>
 <body>
     <table class="container d-flex justify-content-center .align-items-center gap-3">
         <tr>
-            <td>Nombre de categoría</td>
-            <td>Nombre Producto</td>
-            <td>Precio por unidad</td>
+            <td>ID</td>
+            <td>ProductName</td>
+            <td>UnitsInStock</td>
         </tr>
         <?php while ($row = mysqli_fetch_array($query)): ?>
             <tr>
-                <td class="izq"><?= $row['Nombre de categoria'] ?></td>
-                <td class="izq"><?= $row['Nombre Producto'] ?></td>
-                <td><?= $row['Precio por unidad'] ?></td>
+                <td><?= $row['ProductID'] ?></td>
+                <td><?= $row['ProductName'] ?></td>
+                <td><?= $row['UnitsInStock'] ?></td>
             </tr>
         <?php endwhile; ?>
     </table>
